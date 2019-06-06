@@ -1,0 +1,3 @@
+SELECT distinct * FROM adidas A left outer join adidas b
+on a.im_name=b.im_name
+and b.tag in ('boots','sandals','shoes','sneakers')
