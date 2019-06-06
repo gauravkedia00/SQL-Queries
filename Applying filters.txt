@@ -1,0 +1,26 @@
+//Single
+SELECT im_name,im_url,attributes = 
+    STUFF((SELECT DISTINCT ', ' + attributes
+           FROM adidas b 
+           WHERE b.im_name = a.im_name AND b.attributes = 'outerwear'
+          FOR XML PATH('')), 1, 2, ''), tag =
+    STUFF((SELECT DISTINCT ', ' + tag
+           FROM adidas b 
+           WHERE b.im_name = a.im_name AND b.tag = 'jumpsuit'
+          FOR XML PATH('')), 1, 2, '')
+FROM adidas a
+GROUP BY im_name,im_url
+
+//Multiple
+
+SELECT im_name,im_url,attributes = 
+    STUFF((SELECT DISTINCT ', ' + attributes
+           FROM adidas b 
+           WHERE b.im_name = a.im_name AND b.attributes = 'full_body_garment' OR b.attributes = 'lower_body_length'
+          FOR XML PATH('')), 1, 2, ''), tag =
+    STUFF((SELECT DISTINCT ', ' + tag
+           FROM adidas b 
+           WHERE b.im_name = a.im_name AND b.tag = 'jumpsuit' or b.tag = 'long'
+          FOR XML PATH('')), 1, 2, '')
+FROM adidas a
+GROUP BY im_name,im_url
